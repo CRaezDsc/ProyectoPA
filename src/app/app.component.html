@@ -1,19 +1,19 @@
 <div class="content">
 
 
-<form class="example-form">
+<form class="example-form" #alumnoForm="ngForm" (ngSubmit)="crearAlumno()">
 
   <table class="example-full-width" cellspacing="0"><tr>
     <td>
         <mat-form-field class="example-full-width">
           <mat-label>Codigo</mat-label>
-          <input matInput placeholder="Ex: 201970XXXX">
+          <input matInput placeholder="Ex: 201970XXXX" [(ngModel)] = "model.codigo" name="codigo">
         </mat-form-field>
     </td>
     <td>
       <mat-form-field class="example-full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Ex: Juan Perez">
+        <input matInput placeholder="Ex: Juan Perez" [(ngModel)] = "model.nombre" name="nombre">
       </mat-form-field>
     </td>
   </tr>
@@ -22,15 +22,16 @@
   <p>
     <mat-form-field class="example-full-width">
       <mat-label>Curso</mat-label>
-      <input matInput placeholder="Ex: Matematicas Discretas"/>
+      <input matInput placeholder="Ex: Matematicas Discretas" [(ngModel)] = "model.curso"  name="curso">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Edad</mat-label>
-      <input matInput placeholder="Ex: 25"/>
+      <input matInput placeholder="Ex: 25" [(ngModel)] = "model.edad"  name="edad">
     </mat-form-field>
   </p>
 
+  <button mat-raised-button color="primary">Añadir Alumno</button>
 </form>
 
 <br>
