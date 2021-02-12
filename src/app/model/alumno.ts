@@ -1,3 +1,4 @@
+// Clase exportable de Alumno
 export class Alumno{
 
   constructor(
