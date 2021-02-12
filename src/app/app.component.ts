@@ -17,7 +17,7 @@ let listaAlumnos: Alumno[] = [
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'proyectoPa';
+
   displayedColumns: string[] = ['codigo', 'nombre', 'curso', 'edad', 'opciones'];
   dataSource = listaAlumnos;
   model = new Alumno(null,'','',null);
