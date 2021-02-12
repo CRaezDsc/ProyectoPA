@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material/table';
+
+
 import { Alumno } from './model/alumno';
 
 let listaAlumnos: Alumno[] = [
@@ -15,24 +18,53 @@ let listaAlumnos: Alumno[] = [
 })
 export class AppComponent {
   title = 'proyectoPa';
-
-  displayedColumns: string[] = ['codigo', 'nombre', 'curso', 'edad'];
+  displayedColumns: string[] = ['codigo', 'nombre', 'curso', 'edad', 'opciones'];
   dataSource = listaAlumnos;
+  model = new Alumno(null,'','',null);
 
-  model = new Alumno(0,'','',0);
-
+  // ViewChild => Manipulacion de elementos html
+  @ViewChild(MatTable) table: MatTable<any>;
 
   crearAlumno(){
 
-    let codigo :number = this.model.codigo;
-    let nombre :String = this.model.nombre;
-    let curso :String = this.model.curso;
-    let edad :number = this.model.edad;
-    alert("Codigo : " + codigo + "\n" +
-          "Nombre : " + nombre + "\n" +
-          "Curso : " + curso + "\n" +
-          "Edad : " + edad + "\n"
-    );
+    let crearEditar: boolean; // true crea || false editar
+
+    for (var i = 0; i < listaAlumnos.length; i++) {
+      if (listaAlumnos[i].codigo === this.model.codigo) {
+        // editar registro
+        crearEditar = false;
+        break;
+      }
+      else{
+        // crear nuevo registro
+        crearEditar = true;
+      }
+    }
+
+    if(crearEditar === true){
+      listaAlumnos.push(this.model)
+    }
+
+    this.table.renderRows();
   }
 
+  editarAlumno(codigo :number){
+    for (var i = 0; i < listaAlumnos.length; i++) {
+      if (listaAlumnos[i].codigo === codigo) {
+        this.model = listaAlumnos[i];
+        break;
+      }
+    }
+  }
+
+  eliminarAlumno(codigo :number){
+    for (var i = 0; i < listaAlumnos.length; i++) {
+      if (listaAlumnos[i].codigo === codigo) {
+        this.dataSource.splice(i, 1);
+        break;
+      }
+    }
+    this.dataSource = listaAlumnos;
+    this.table.renderRows();
+  }
 }
