@@ -38,23 +38,54 @@ export class AppComponent {
   // Variable Bind (blindaje) del formulario
   model = new Alumno(null,'','',null);
 
-  // Funcion de creacion de Alumno
+  // Metodo de creacion de Alumno
   crearAlumno(){
+
+    // Variables del Metodo
+    let flagCrear: Boolean; // 0 = no crear | 1 = crear
+    let codigoAEditar: number;
 
     // Busqueda del codigo en el origen de datos
     for (var i = 0; i < listaAlumnos.length; i++) {
-      if (listaAlumnos[i].codigo === this.model.codigo) {
+      if (listaAlumnos[i].codigo == this.model.codigo) {
+
         // No crear porque ya existe
+        flagCrear = false;
+        codigoAEditar = i;
         break;
       }
       else{
+
         // Crear nuevo registro
-        listaAlumnos.push(this.model)
+        flagCrear = true;
       }
+    }
+
+    // Se agrega modelo a un objeto de alumnos
+    let alumno :Alumno;
+    alumno = {
+      codigo: this.model.codigo,
+      nombre: this.model.nombre,
+      curso: this.model.curso,
+      edad: this.model.edad
+    };
+
+    if(flagCrear === true) {
+
+      // Se agrega objeto a la lista
+      listaAlumnos.push(alumno)
+    }
+    else{
+      // Se crear el objeto con los datos nuevos y
+      // Se inserta en la posicion original de la lista
+      listaAlumnos[codigoAEditar] = alumno;
     }
 
     // Actualizar la tabla con metodo de MatTable - Material
     this.table.renderRows();
+
+    //Limpia modelo
+    this.model = new Alumno(null,'','',null);
   }
 
   // Funcion de edicion de alumno
@@ -62,9 +93,18 @@ export class AppComponent {
 
     // Buscar alumno a editar
     for (var i = 0; i < listaAlumnos.length; i++) {
-      if (listaAlumnos[i].codigo === codigo) {
+      if (listaAlumnos[i].codigo == codigo) {
+
         // Cargar modelo de alumno a editar en el formulario
-        this.model = listaAlumnos[i];
+        let alumno :Alumno;
+        alumno = {
+          codigo: listaAlumnos[i].codigo,
+          nombre: listaAlumnos[i].nombre,
+          curso: listaAlumnos[i].curso,
+          edad: listaAlumnos[i].edad
+        };
+
+        this.model = alumno;
         break;
       }
     }
@@ -72,6 +112,7 @@ export class AppComponent {
 
   // Funcion de eliminación de alumno
   eliminarAlumno(codigo :number){
+
     // Buscar alumno a eliminar
     for (var i = 0; i < listaAlumnos.length; i++) {
       if (listaAlumnos[i].codigo === codigo) {
@@ -81,6 +122,7 @@ export class AppComponent {
         break;
       }
     }
+
     // Actualizacion de origen de datos
     this.dataSource = listaAlumnos;
 
