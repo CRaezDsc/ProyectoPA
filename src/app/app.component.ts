@@ -42,7 +42,7 @@ export class AppComponent {
   crearAlumno(){
 
     // Variables del Metodo
-    let flagCrear: Boolean; // 0 = no crear | 1 = crear
+    let flagCrear: Boolean = true; // false = no crear | true = crear
     let codigoAEditar: number;
 
     // Busqueda del codigo en el origen de datos
@@ -118,7 +118,7 @@ export class AppComponent {
       if (listaAlumnos[i].codigo === codigo) {
 
         //  Eliminacion de alumno
-        this.dataSource.splice(i, 1);
+        listaAlumnos.splice(i, 1);
         break;
       }
     }
